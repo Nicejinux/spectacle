@@ -1,7 +1,7 @@
 #import "SpectaclePreferencesController.h"
 #import "SpectacleHotKeyManager.h"
 #import "SpectacleHotKeyValidator.h"
-#import "SpectacleSplitRateManager.h"
+#import "SpectacleSplitRatioManager.h"
 #import "SpectacleWindowPositionManager.h"
 #import "SpectacleUtilities.h"
 #import "SpectacleConstants.h"
@@ -9,7 +9,7 @@
 @interface SpectaclePreferencesController () 
 
 @property (nonatomic, weak) SpectacleHotKeyManager *hotKeyManager;
-@property (nonatomic, weak) SpectacleSplitRateManager *splitManager;
+@property (nonatomic, weak) SpectacleSplitRatioManager *splitManager;
 @property (nonatomic) NSDictionary *hotKeyRecorders;
 
 @end
@@ -21,7 +21,7 @@
 - (id)init {
     if ((self = [super initWithWindowNibName: SpectaclePreferencesWindowNibName])) {
         _hotKeyManager = SpectacleHotKeyManager.sharedManager;
-        _splitManager  = SpectacleSplitRateManager.sharedManager;
+        _splitManager  = SpectacleSplitRatioManager.sharedManager;
     }
     
     return self;
@@ -86,9 +86,9 @@
         NSLog(@"slider value stopped changing");
         // save current value to NSUserDefaults
         if (slider.tag == SpectacleColSliderTag) {
-            [_splitManager registerColSplitRate:value];
+            [_splitManager registerColSplitValue:value];
         } else {
-            [_splitManager registerRowSplitRate:value];
+            [_splitManager registerRowSplitValue:value];
         }
     }
 }
@@ -194,8 +194,8 @@
 
 - (void)loadRegisteredSplitRates {
     // get saved split rates
-    NSInteger colRate = [_splitManager registeredColSplitRate];
-    NSInteger rowRate = [_splitManager registeredRowSplitRate];
+    NSInteger colRate = [_splitManager registeredColSplitValue];
+    NSInteger rowRate = [_splitManager registeredRowSplitValue];
     
     // set saved split rates to slider and preview
     [_colRateSlider setIntegerValue:colRate];

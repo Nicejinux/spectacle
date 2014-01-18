@@ -1,6 +1,7 @@
 #import "SpectacleWindowPositionCalculator.h"
 #import "SpectacleHistoryItem.h"
 #import "SpectacleConstants.h"
+#import "SpectacleSplitRatioManager.h"
 
 #define AgainstTheLeftEdgeOfScreen(a, b) (a.origin.x <= b.origin.x)
 #define AgainstTheRightEdgeOfScreen(a, b) (CGRectGetMaxX(a) >= CGRectGetMaxX(b))
@@ -18,17 +19,25 @@
 
 + (CGRect)calculateWindowRect: (CGRect)windowRect visibleFrameOfScreen: (CGRect)visibleFrameOfScreen action: (SpectacleWindowAction)action {
     CGRect calculatedWindowRect = windowRect;
+    CGFloat colRatioLeft   = [[SpectacleSplitRatioManager sharedManager] registeredColSplitRatioLeft];
+    CGFloat colRatioRight  = [[SpectacleSplitRatioManager sharedManager] registeredColSplitRatioRight];
+    CGFloat rowRatioTop    = [[SpectacleSplitRatioManager sharedManager] registeredRowSplitRatioTop];
+    CGFloat rowRatioBottom = [[SpectacleSplitRatioManager sharedManager] registeredRowSplitRatioBottom];
     
+    // find x offset
+    // SpectacleWindowActionRightHalf, SpectacleWindowActionUpperRight,  SpectacleWindowActionLowerRight,
     if ((action >= SpectacleWindowActionRightHalf) && (action <= SpectacleWindowActionLowerRight)) {
-        calculatedWindowRect.origin.x = visibleFrameOfScreen.origin.x + floor(visibleFrameOfScreen.size.width / 2.0f);
-    } else if (MovingToCenterRegionOfDisplay(action)) {
+        calculatedWindowRect.origin.x = visibleFrameOfScreen.origin.x + floor(visibleFrameOfScreen.size.width * colRatioLeft);
+    } else if (MovingToCenterRegionOfDisplay(action)) { // SpectacleWindowActionCenter
         calculatedWindowRect.origin.x = floor(visibleFrameOfScreen.size.width / 2.0f) - floor(calculatedWindowRect.size.width / 2.0f) + visibleFrameOfScreen.origin.x;
     } else if (!MovingToThirdOfDisplay(action)) {
         calculatedWindowRect.origin.x = visibleFrameOfScreen.origin.x;
     }
     
+    // find y offset
+    // SpectacleWindowActionTopHalf, SpectacleWindowActionUpperLeft, SpectacleWindowActionUpperRight
     if (MovingToTopRegionOfDisplay(action)) {
-        calculatedWindowRect.origin.y = visibleFrameOfScreen.origin.y + floor(visibleFrameOfScreen.size.height / 2.0f);
+        calculatedWindowRect.origin.y = visibleFrameOfScreen.origin.y + floor(visibleFrameOfScreen.size.height * rowRatioTop);
     } else if (MovingToCenterRegionOfDisplay(action)) {
         calculatedWindowRect.origin.y = floor(visibleFrameOfScreen.size.height / 2.0f) - floor(calculatedWindowRect.size.height / 2.0f) + visibleFrameOfScreen.origin.y;
     } else if (!MovingToThirdOfDisplay(action)) {
@@ -41,7 +50,11 @@
         } else if ([SpectacleWindowPositionCalculator halfToOneThird: windowRect visibleFrameOfScreen: visibleFrameOfScreen withAction: action]) {
             calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width / 3.0f);
         } else {
-            calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width / 2.0f);
+            if (action == SpectacleWindowActionLeftHalf) {
+                calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width * colRatioLeft);
+            } else {
+                calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width * colRatioRight);
+            }
         }
         
         if (action == SpectacleWindowActionRightHalf) {
@@ -49,12 +62,28 @@
         }
         
         calculatedWindowRect.size.height = visibleFrameOfScreen.size.height;
-    } else if ((action == SpectacleWindowActionTopHalf) || (action == SpectacleWindowActionBottomHalf)) {
+    } else if (action == SpectacleWindowActionTopHalf) {
         calculatedWindowRect.size.width = visibleFrameOfScreen.size.width;
-        calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height / 2.0f);
-    } else if (MovingToUpperOrLowerLeftOfDisplay(action) || MovingToUpperOrLowerRightDisplay(action)) {
-        calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width / 2.0f);
-        calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height / 2.0f);
+        calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioTop);
+    } else if (action == SpectacleWindowActionBottomHalf) {
+        calculatedWindowRect.size.width = visibleFrameOfScreen.size.width;
+        calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioBottom);
+    } else if (MovingToUpperOrLowerLeftOfDisplay(action)) {
+        calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width * colRatioLeft);
+        if (action == SpectacleWindowActionUpperLeft) {
+            calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioTop);
+        } else {
+            calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioBottom);
+        }
+        
+    } else if (MovingToUpperOrLowerRightDisplay(action)) {
+        calculatedWindowRect.size.width = floor(visibleFrameOfScreen.size.width * colRatioRight);
+        if (action == SpectacleWindowActionUpperRight) {
+            calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioTop);
+        } else {
+            calculatedWindowRect.size.height = floor(visibleFrameOfScreen.size.height * rowRatioBottom);
+        }
+
     } else if (!MovingToCenterRegionOfDisplay(action) && !MovingToThirdOfDisplay(action)) {
         calculatedWindowRect.size.width = visibleFrameOfScreen.size.width;
         calculatedWindowRect.size.height = visibleFrameOfScreen.size.height;

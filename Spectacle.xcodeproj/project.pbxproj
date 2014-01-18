@@ -40,7 +40,7 @@
 		2DA85CA316B47F540057CEAA /* BlacklistedApplications.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2DA85CA216B47F540057CEAA /* BlacklistedApplications.plist */; };
 		2DC3A85A181A039200B68601 /* Security & Privacy.png in Resources */ = {isa = PBXBuildFile; fileRef = 2DC3A859181A039200B68601 /* Security & Privacy.png */; };
 		2DF03CEE148684E000D09E90 /* Spectacle.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2DF03CED148684E000D09E90 /* Spectacle.icns */; };
-		72EDD20E188ADD0B00F3C62E /* SpectacleSplitRateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72EDD20D188ADD0B00F3C62E /* SpectacleSplitRateManager.m */; };
+		72EDD20E188ADD0B00F3C62E /* SpectacleSplitRatioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 72EDD20D188ADD0B00F3C62E /* SpectacleSplitRatioManager.m */; };
 		C92F241816937C63000D94AB /* Spectacle Status Item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C92F241716937C63000D94AB /* Spectacle Status Item@2x.png */; };
 		C92F241A16937CA3000D94AB /* Spectacle Alternate Status Item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C92F241916937CA3000D94AB /* Spectacle Alternate Status Item@2x.png */; };
 /* End PBXBuildFile section */
@@ -135,8 +135,8 @@
 		2DC3A859181A039200B68601 /* Security & Privacy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Security & Privacy.png"; path = "Resources/Images/Security & Privacy.png"; sourceTree = "<group>"; };
 		2DF03CED148684E000D09E90 /* Spectacle.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = Spectacle.icns; path = Resources/Images/Icons/Spectacle.icns; sourceTree = "<group>"; };
 		32DBCFA20370C41700C91783 /* Spectacle.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Spectacle.pch; sourceTree = "<group>"; };
-		72EDD20C188ADD0B00F3C62E /* SpectacleSplitRateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpectacleSplitRateManager.h; sourceTree = "<group>"; };
-		72EDD20D188ADD0B00F3C62E /* SpectacleSplitRateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpectacleSplitRateManager.m; sourceTree = "<group>"; };
+		72EDD20C188ADD0B00F3C62E /* SpectacleSplitRatioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpectacleSplitRatioManager.h; sourceTree = "<group>"; };
+		72EDD20D188ADD0B00F3C62E /* SpectacleSplitRatioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpectacleSplitRatioManager.m; sourceTree = "<group>"; };
 		C92F241716937C63000D94AB /* Spectacle Status Item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spectacle Status Item@2x.png"; path = "Resources/Images/Spectacle Status Item@2x.png"; sourceTree = "<group>"; };
 		C92F241916937CA3000D94AB /* Spectacle Alternate Status Item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Spectacle Alternate Status Item@2x.png"; path = "Resources/Images/Spectacle Alternate Status Item@2x.png"; sourceTree = "<group>"; };
 		F506C035013D953901CA16C8 /* PreferencePanes.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PreferencePanes.framework; path = /System/Library/Frameworks/PreferencePanes.framework; sourceTree = "<absolute>"; };
@@ -165,8 +165,8 @@
 				07678096118679C600614FB5 /* SpectacleHotKeyManager.m */,
 				2D1AE52315D715F400EAC5BD /* SpectacleHotKeyValidator.h */,
 				2D1AE52415D715F400EAC5BD /* SpectacleHotKeyValidator.m */,
-				72EDD20C188ADD0B00F3C62E /* SpectacleSplitRateManager.h */,
-				72EDD20D188ADD0B00F3C62E /* SpectacleSplitRateManager.m */,
+				72EDD20C188ADD0B00F3C62E /* SpectacleSplitRatioManager.h */,
+				72EDD20D188ADD0B00F3C62E /* SpectacleSplitRatioManager.m */,
 				2D4F3ECE14A27B4500C29D11 /* SpectacleScreenDetection.h */,
 				2D4F3ECF14A27B4500C29D11 /* SpectacleScreenDetection.m */,
 				07BB542B1186662F0045663F /* SpectacleUtilities.h */,
@@ -486,7 +486,7 @@
 				2D8DA057147E113D003BE1D3 /* SpectacleUtilities.m in Sources */,
 				2D768E90147ED57600901E76 /* SpectacleWindowActionController.m in Sources */,
 				2D279EE116BCB85100F6894A /* SpectacleWindowPositionCalculator.m in Sources */,
-				72EDD20E188ADD0B00F3C62E /* SpectacleSplitRateManager.m in Sources */,
+				72EDD20E188ADD0B00F3C62E /* SpectacleSplitRatioManager.m in Sources */,
 				2D8DA058147E113D003BE1D3 /* SpectacleWindowPositionManager.m in Sources */,
 				2D279EDD16BB8A7000F6894A /* ZKAccessibilityElementAdditions.m in Sources */,
 			);
