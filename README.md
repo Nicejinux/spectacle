@@ -27,5 +27,18 @@ Spectacle should be accompanied by a LICENSE file containing the license relevan
 
 If no LICENSE exists please contact Eric Czarny <eczarny@gmail.com>.
 
+
+# Add split ratio configuration by [Nicejinux] [3]
+
+Add split ratio configuration on Preference.
+
+so, You can change split ratio. (left/right and top/bottom)
+
+If you find a bug about this feature,
+Please, contact me by email <nicejinux@gmail.com>
+
+Thanks.
+
 [1]: http://sparkle.andymatuschak.org
 [2]: http://github.com/eczarny/zerokit
+[3]: http://nicejinux.net
