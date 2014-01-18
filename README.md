@@ -30,6 +30,8 @@ If no LICENSE exists please contact Eric Czarny <eczarny@gmail.com>.
 
 # Add split ratio configuration by [Nicejinux] [3]
 
+Implementing now. (Not complited yet)
+
 Add split ratio configuration on Preference.
 
 so, You can change split ratio. (left/right and top/bottom)
