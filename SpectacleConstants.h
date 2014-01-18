@@ -75,3 +75,16 @@
 #define SpectacleSecurityAndPrivacyPreferencesScriptName @"Security & Privacy System Preferences"
 
 #define SpectacleAppleScriptFileExtension                @"scpt"
+
+
+#pragma mark -
+
+#define SpectacleColSliderTag                            1
+#define SpectacleRowSliderTag                            2
+
+#define SpectaclePreviewRatio                            10.0f
+#define SpectacleRowSliderOffset                         83
+#define SpectacleDefaultSplitRate                        50
+
+#define SpectacleColSplitRate                            @"SpectacleColSplitRate"
+#define SpectacleRowSplitRate                            @"SpectacleRowSplitRate"

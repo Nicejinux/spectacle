@@ -1,13 +1,15 @@
 #import "SpectaclePreferencesController.h"
 #import "SpectacleHotKeyManager.h"
 #import "SpectacleHotKeyValidator.h"
+#import "SpectacleSplitRateManager.h"
 #import "SpectacleWindowPositionManager.h"
 #import "SpectacleUtilities.h"
 #import "SpectacleConstants.h"
 
-@interface SpectaclePreferencesController ()
+@interface SpectaclePreferencesController () 
 
 @property (nonatomic, weak) SpectacleHotKeyManager *hotKeyManager;
+@property (nonatomic, weak) SpectacleSplitRateManager *splitManager;
 @property (nonatomic) NSDictionary *hotKeyRecorders;
 
 @end
@@ -19,6 +21,7 @@
 - (id)init {
     if ((self = [super initWithWindowNibName: SpectaclePreferencesWindowNibName])) {
         _hotKeyManager = SpectacleHotKeyManager.sharedManager;
+        _splitManager  = SpectacleSplitRateManager.sharedManager;
     }
     
     return self;
@@ -56,9 +59,57 @@
         loginItemEnabledState = NSOnState;
     }
     
+    [_colRateSlider setTag:SpectacleColSliderTag];
+    [_colRateSlider setTarget:self];
+    [_colRateSlider setAction:@selector(sliderDidMove:)];
+
+    [_rowRateSlider setTag:SpectacleRowSliderTag];
+    [_rowRateSlider setTarget:self];
+    [_rowRateSlider setAction:@selector(sliderDidMove:)];
+
+    [self loadRegisteredSplitRates];
+    
     _loginItemEnabled.state = loginItemEnabledState;
     
     [_statusItemEnabled selectItemWithTag: isStatusItemEnabled ? 0 : 1];
+}
+
+- (void)sliderDidMove:(id)sender {
+    NSEvent *event = [[NSApplication sharedApplication] currentEvent];
+    BOOL endingDrag = event.type == NSLeftMouseUp;
+
+    NSSlider *slider = (NSSlider *)sender;
+    NSInteger value = [slider integerValue];
+    [self resizeSplitPreview:slider];
+    
+    if (endingDrag) {
+        NSLog(@"slider value stopped changing");
+        // save current value to NSUserDefaults
+        if (slider.tag == SpectacleColSliderTag) {
+            [_splitManager registerColSplitRate:value];
+        } else {
+            [_splitManager registerRowSplitRate:value];
+        }
+    }
+}
+
+- (void)resizeSplitPreview:(NSSlider *)slider {
+    NSRect rect;
+    NSInteger value = [slider integerValue];
+    CGFloat velocity = (value - SpectacleDefaultSplitRate) / SpectaclePreviewRatio;
+
+    if (slider.tag == SpectacleColSliderTag) {
+        [_colRateTextField setIntegerValue:value];
+        rect = _colRatePreview.frame;
+        rect.size.width = SpectaclePreviewRatio + velocity;
+        [_colRatePreview setFrame:rect];
+    } else {
+        [_rowRateTextField setIntegerValue:value];
+        rect = _rowRatePreview.frame;
+        rect.size.height = SpectaclePreviewRatio + velocity;
+        rect.origin.y = SpectacleRowSliderOffset - velocity;
+        [_rowRatePreview setFrame:rect];
+    }
 }
 
 #pragma mark -
@@ -137,6 +188,25 @@
         
         [userDefaults setBool: isStatusItemEnabled forKey: SpectacleStatusItemEnabledPreference];
     }
+}
+
+#pragma mark -
+
+- (void)loadRegisteredSplitRates {
+    // get saved split rates
+    NSInteger colRate = [_splitManager registeredColSplitRate];
+    NSInteger rowRate = [_splitManager registeredRowSplitRate];
+    
+    // set saved split rates to slider and preview
+    [_colRateSlider setIntegerValue:colRate];
+    [self resizeSplitPreview:_colRateSlider];
+    
+    [_rowRateSlider setIntegerValue:rowRate];
+    [self resizeSplitPreview:_rowRateSlider];
+    
+    // set saved split rates to textfields
+    [_colRateTextField setIntegerValue:colRate];
+    [_rowRateTextField setIntegerValue:rowRate];
 }
 
 #pragma mark -

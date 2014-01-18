@@ -26,6 +26,15 @@
 @property (nonatomic) IBOutlet NSButton *loginItemEnabled;
 @property (nonatomic) IBOutlet NSPopUpButton *statusItemEnabled;
 
+@property (nonatomic) IBOutlet NSSlider *colRateSlider;
+@property (nonatomic) IBOutlet NSSlider *rowRateSlider;
+
+@property (nonatomic) IBOutlet NSTextField *colRateTextField;
+@property (nonatomic) IBOutlet NSTextField *rowRateTextField;
+
+@property (nonatomic) IBOutlet NSTextField *colRatePreview;
+@property (nonatomic) IBOutlet NSTextField *rowRatePreview;
+
 #pragma mark -
 
 - (IBAction)toggleWindow: (id)sender;
