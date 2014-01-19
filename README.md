@@ -1,4 +1,4 @@
-# Spectacle + Extend
+# Spectacle + Partition
 
 Spectacle allows you to easily organize your windows without using a mouse.
 
@@ -28,11 +28,11 @@ Spectacle should be accompanied by a LICENSE file containing the license relevan
 If no LICENSE exists please contact Eric Czarny <eczarny@gmail.com>.
 
 
-# Add something by [Nicejinux] [3]
+# Partition Config by [Nicejinux] [3]
 
-Add split ratio configuration on Preference.
+Added partition ratio configuration.
 
-so, You can change split ratio. (left/right and top/bottom)
+so, You can change partition ratio on Preference. (left/right and top/bottom)
 
 If you find a bug about this feature,
 Please, contact me by email <nicejinux@gmail.com>
