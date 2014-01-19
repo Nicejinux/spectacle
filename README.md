@@ -1,4 +1,4 @@
-# Spectacle
+# Spectacle + Extend
 
 Spectacle allows you to easily organize your windows without using a mouse.
 
@@ -28,7 +28,7 @@ Spectacle should be accompanied by a LICENSE file containing the license relevan
 If no LICENSE exists please contact Eric Czarny <eczarny@gmail.com>.
 
 
-# Add somthing by [Nicejinux] [3]
+# Add something by [Nicejinux] [3]
 
 Add split ratio configuration on Preference.
 
